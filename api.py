@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-app = FastAPI() #api
+from todo import todo_router
+app = FastAPI()
 @app.get("/")
-async def welcome() -> dict:
-    return {"message": "Anna Vasilyeva"}
+async def welcome() -> dict:return { "message": "Anna Vasilyeva"}
+app.include_router(todo_router)
