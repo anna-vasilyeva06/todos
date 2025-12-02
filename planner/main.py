@@ -1,17 +1,18 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
-from database.connection import conn
+from database.connection import init_db
 from routes.events import event_router
+from routes.users import user_router
 import uvicorn
 
 app = FastAPI()
 
-# Регистрация маршрутов
 app.include_router(event_router, prefix="/event")
+app.include_router(user_router, prefix="/user")
 
 @app.on_event("startup")
-def on_startup():
-    conn()
+async def on_startup():
+    await init_db()
 
 @app.get("/")
 async def home():
